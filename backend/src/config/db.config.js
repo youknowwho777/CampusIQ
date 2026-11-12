@@ -175,25 +175,25 @@ async function query(text, params = []) {
   // Handle fallback in-memory queries for Auth & User tables
   const upperQuery = text.toUpperCase();
 
-  // Find user by email
-  if (upperQuery.includes('SELECT') && upperQuery.includes('FROM USERS') && upperQuery.includes('EMAIL')) {
-    const email = params[0]?.toLowerCase().trim();
-    const user = inMemoryStore.users.find(u => u.email.toLowerCase() === email);
+  // Find user by ID
+  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE ID =') || upperQuery.includes('WHERE ID='))) {
+    const id = params[0];
+    const user = inMemoryStore.users.find(u => u.id === id);
     return { rows: user ? [user] : [], rowCount: user ? 1 : 0 };
   }
 
-  // Find user by ID
-  if (upperQuery.includes('SELECT') && upperQuery.includes('FROM USERS') && upperQuery.includes('ID =')) {
-    const id = params[0];
-    const user = inMemoryStore.users.find(u => u.id === id);
+  // Find user by email
+  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE EMAIL =') || upperQuery.includes('WHERE EMAIL='))) {
+    const email = params[0]?.toLowerCase().trim();
+    const user = inMemoryStore.users.find(u => u.email.toLowerCase() === email);
     return { rows: user ? [user] : [], rowCount: user ? 1 : 0 };
   }
 
   // List users with optional role filtering
   if (upperQuery.includes('SELECT') && upperQuery.includes('FROM USERS')) {
     let result = [...inMemoryStore.users];
-    if (params.length > 0 && params[0]) {
-      result = result.filter(u => u.role === params[0]);
+    if (upperQuery.includes('WHERE ROLE') && params.length > 0 && params[0]) {
+      result = result.filter(u => u.role === params[0].toUpperCase());
     }
     return { rows: result, rowCount: result.length };
   }

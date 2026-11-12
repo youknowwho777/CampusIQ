@@ -1,4 +1,12 @@
 // Supertest automated integration test suite for Authentication and RBAC
+const mime = require('mime');
+if (!mime.getType) {
+  mime.getType = (path) => mime.lookup(path);
+}
+if (!mime.getExtension) {
+  mime.getExtension = (type) => mime.extension(type);
+}
+
 const request = require('supertest');
 const app = require('../../backend/src/app');
 const { testDbConnection } = require('../../backend/src/config/db.config');
