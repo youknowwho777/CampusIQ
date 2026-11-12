@@ -1,10 +1,12 @@
-// Lecture notes, syllabus PDFs, and multimedia study material repositories: REST API route declarations
+// Course study materials, syllabi, and reference document repository: REST API route declarations
 const express = require('express');
 const router = express.Router();
 const controller = require('./materials.controller');
 const authMiddleware = require('../../middleware/auth.middleware');
+const rbacMiddleware = require('../../middleware/rbac.middleware');
 
-// Route definitions placeholder
+router.get('/course/:courseId', authMiddleware, controller.getByCourse);
+router.post('/', authMiddleware, rbacMiddleware('TEACHER', 'HOD', 'ADMIN'), controller.create);
 router.get('/', authMiddleware, controller.getAll);
 router.get('/:id', authMiddleware, controller.getById);
 

@@ -12,6 +12,8 @@ CREATE TABLE courses (
     code VARCHAR(20) NOT NULL UNIQUE,
     title VARCHAR(255) NOT NULL,
     department_id UUID REFERENCES departments(id) ON DELETE CASCADE,
+    teacher_id UUID REFERENCES users(id) ON DELETE SET NULL,
+    section VARCHAR(10) DEFAULT 'Sec A',
     credits INT NOT NULL DEFAULT 3,
     semester INT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP

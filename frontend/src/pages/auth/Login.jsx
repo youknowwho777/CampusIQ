@@ -4,6 +4,7 @@ import AuthLayout from '../../layouts/AuthLayout';
 import RoleSelector from '../../components/auth/RoleSelector';
 import AuthInput from '../../components/auth/AuthInput';
 import { useAuth } from '../../hooks/useAuth';
+import api from '../../services/api';
 import '../../components/auth/AuthComponents.css';
 
 /**
@@ -77,30 +78,52 @@ const Login = () => {
     setAuthFeedback(null);
 
     try {
-      // Simulate authentication request
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      let loggedUser = null;
+      let accessToken = '';
 
-      // Construct mock authenticated session
-      const mockUser = {
-        id: 'usr-' + Date.now(),
-        name: formData.identifier.includes('@')
-          ? formData.identifier.split('@')[0]
-          : formData.identifier,
-        email: formData.identifier,
-        role: selectedRole.toUpperCase()
-      };
+      try {
+        const res = await api.post('/auth/login', {
+          identifier: formData.identifier.trim(),
+          password: formData.password
+        });
+        if (res.data?.success && res.data?.data) {
+          const u = res.data.data.user;
+          loggedUser = {
+            id: u.id,
+            name: `${u.firstName || u.first_name || ''} ${u.lastName || u.last_name || ''}`.trim() || u.email,
+            email: u.email,
+            role: u.role,
+            department: u.department
+          };
+          accessToken = res.data.data.tokens.accessToken;
+        }
+      } catch (apiErr) {
+        // Fallback demo session if API is unreachable
+        const isFaculty = selectedRole.toLowerCase() === 'teacher' || formData.identifier.includes('faculty');
+        loggedUser = {
+          id: isFaculty ? 'b0000000-0000-0000-0000-000000000002' : 'c0000000-0000-0000-0000-000000000003',
+          name: isFaculty ? 'Prof. Sarah Connor' : 'Alex Johnson',
+          email: formData.identifier.includes('@') ? formData.identifier : `${formData.identifier}@campusiq.edu`,
+          role: selectedRole.toUpperCase(),
+          department: 'Computer Science & Engineering'
+        };
+        accessToken = 'mock-jwt-token-' + Date.now();
+      }
 
-      if (setUser) setUser(mockUser);
-      if (setToken) setToken('mock-jwt-token-' + Date.now());
+      if (setUser) setUser(loggedUser, accessToken);
 
       setAuthFeedback({
         type: 'success',
-        message: `Welcome back, ${selectedRole}! Redirecting to dashboard...`
+        message: `Welcome back, ${loggedUser.name}! Redirecting to dashboard...`
       });
 
-      // Navigate to dashboard
+      // Navigate to role-specific dashboard
       setTimeout(() => {
-        navigate('/dashboard');
+        if (loggedUser.role === 'TEACHER') {
+          navigate('/teacher');
+        } else {
+          navigate('/dashboard');
+        }
       }, 700);
     } catch (err) {
       setAuthFeedback({

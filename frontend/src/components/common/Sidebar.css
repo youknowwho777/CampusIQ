@@ -1,0 +1,238 @@
+/* Teacher Dashboard Sidebar Styling matching CampusIQ visual specification */
+.campusiq-sidebar {
+  width: 270px;
+  background-color: var(--color-forest-darkest, #05271d);
+  background: linear-gradient(180deg, #072e25 0%, #041d16 100%);
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  user-select: none;
+  z-index: 100;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+/* Scrollbar styling */
+.campusiq-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.campusiq-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* Brand Section */
+.sidebar-brand-section {
+  padding: 24px 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-cap-icon {
+  width: 38px;
+  height: 38px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-primary-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.brand-primary-name strong {
+  color: var(--color-gold-base, #f59e0b);
+}
+
+.brand-platform-tag {
+  font-size: 0.72rem;
+  color: #8da49f;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-top: 3px;
+}
+
+/* User Profile Card */
+.sidebar-user-card {
+  margin: 8px 16px 20px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-user-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.user-avatar-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+  border: 2px solid #22c55e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.user-details-box {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-full-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role-meta {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 1px;
+}
+
+.user-chevron {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+/* Nav Menu Groups */
+.sidebar-nav {
+  padding: 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav-link-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.nav-link-item:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateX(2px);
+}
+
+.nav-link-item.active {
+  background: linear-gradient(90deg, #166534 0%, #15803d 100%);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(22, 101, 52, 0.45);
+}
+
+.nav-link-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 4px;
+  background-color: #4ade80;
+  border-radius: 0 4px 4px 0;
+}
+
+.nav-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.nav-item-label {
+  flex: 1;
+}
+
+.nav-badge-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-gold-base, #f59e0b);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
+}
+
+/* Nav Divider and Section Headers */
+.nav-group-header {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  font-weight: 700;
+  padding: 18px 14px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Bottom Campus Silhouette Decoration */
+.sidebar-footer-backdrop {
+  margin-top: auto;
+  padding: 16px 20px 20px;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.campus-silhouette-svg {
+  width: 100%;
+  height: 48px;
+  opacity: 0.18;
+  color: #8da49f;
+}
+
+.sidebar-version-tag {
+  font-size: 0.7rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 8px;
+}

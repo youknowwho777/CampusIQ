@@ -8,10 +8,31 @@ const api = axios.create({
   }
 });
 
-// Interceptor placeholder for attaching Bearer token
+// Interceptor to attach Bearer token to all outgoing requests
 api.interceptors.request.use(
-  (config) => config,
+  (config) => {
+    const token = localStorage.getItem('campusiq_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
   (error) => Promise.reject(error)
+);
+
+// Interceptor to handle unauthorized 401 response
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Token expired or invalid - redirect to login if not already there
+      if (!window.location.pathname.includes('/login')) {
+        localStorage.removeItem('campusiq_token');
+        // Optional redirect if needed
+      }
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default api;

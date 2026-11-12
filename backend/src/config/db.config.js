@@ -24,10 +24,18 @@ const inMemoryStore = {
     { id: 4, name: 'HOD', description: 'Head of department' }
   ],
   users: [],
-  refreshTokens: new Set()
+  refreshTokens: new Set(),
+  departments: [],
+  courses: [],
+  enrollments: [],
+  attendance: [],
+  marks: [],
+  assignments: [],
+  assignmentSubmissions: [],
+  studyMaterials: []
 };
 
-// Seed initial demo users in memory
+// Seed initial demo users and academic data in memory
 async function seedDefaultUsersInMemory() {
   if (inMemoryStore.users.length > 0) return;
 
@@ -69,8 +77,322 @@ async function seedDefaultUsersInMemory() {
       last_name: 'Johnson',
       department: 'Computer Science & Engineering',
       phone_number: '+1-555-0102',
+      roll_number: 'CS2024001',
       is_active: true,
       created_at: new Date()
+    },
+    {
+      id: 'c0000000-0000-0000-0000-000000000004',
+      email: 'sophia.m@campusiq.edu',
+      password_hash: studentHash,
+      role: 'STUDENT',
+      first_name: 'Sophia',
+      last_name: 'Miller',
+      department: 'Computer Science & Engineering',
+      phone_number: '+1-555-0103',
+      roll_number: 'CS2024002',
+      is_active: true,
+      created_at: new Date()
+    },
+    {
+      id: 'c0000000-0000-0000-0000-000000000005',
+      email: 'liam.c@campusiq.edu',
+      password_hash: studentHash,
+      role: 'STUDENT',
+      first_name: 'Liam',
+      last_name: 'Chen',
+      department: 'Computer Science & Engineering',
+      phone_number: '+1-555-0104',
+      roll_number: 'CS2024003',
+      is_active: true,
+      created_at: new Date()
+    },
+    {
+      id: 'c0000000-0000-0000-0000-000000000006',
+      email: 'emma.d@campusiq.edu',
+      password_hash: studentHash,
+      role: 'STUDENT',
+      first_name: 'Emma',
+      last_name: 'Davis',
+      department: 'Computer Science & Engineering',
+      phone_number: '+1-555-0105',
+      roll_number: 'CS2024004',
+      is_active: true,
+      created_at: new Date()
+    },
+    {
+      id: 'c0000000-0000-0000-0000-000000000007',
+      email: 'noah.p@campusiq.edu',
+      password_hash: studentHash,
+      role: 'STUDENT',
+      first_name: 'Noah',
+      last_name: 'Patel',
+      department: 'Computer Science & Engineering',
+      phone_number: '+1-555-0106',
+      roll_number: 'CS2024005',
+      is_active: true,
+      created_at: new Date()
+    },
+    {
+      id: 'c0000000-0000-0000-0000-000000000008',
+      email: 'olivia.w@campusiq.edu',
+      password_hash: studentHash,
+      role: 'STUDENT',
+      first_name: 'Olivia',
+      last_name: 'Wilson',
+      department: 'Computer Science & Engineering',
+      phone_number: '+1-555-0107',
+      roll_number: 'CS2024006',
+      is_active: true,
+      created_at: new Date()
+    }
+  );
+
+  // Seed Departments
+  inMemoryStore.departments.push({
+    id: 'd0000000-0000-0000-0000-000000000001',
+    code: 'CSE',
+    name: 'Computer Science & Engineering',
+    head_of_department_id: 'b0000000-0000-0000-0000-000000000002',
+    created_at: new Date()
+  });
+
+  // Seed Assigned Courses for Prof. Sarah Connor
+  inMemoryStore.courses.push(
+    {
+      id: 'e0000000-0000-0000-0000-000000000001',
+      code: 'CS201',
+      title: 'Data Structures & Algorithms',
+      department_id: 'd0000000-0000-0000-0000-000000000001',
+      teacher_id: 'b0000000-0000-0000-0000-000000000002',
+      section: 'Sec A',
+      credits: 4,
+      semester: 3,
+      schedule: 'Mon, Wed 09:00 - 10:30 AM',
+      room: 'Hall 302',
+      created_at: new Date()
+    },
+    {
+      id: 'e0000000-0000-0000-0000-000000000002',
+      code: 'CS203',
+      title: 'Database Management Systems',
+      department_id: 'd0000000-0000-0000-0000-000000000001',
+      teacher_id: 'b0000000-0000-0000-0000-000000000002',
+      section: 'Sec B',
+      credits: 4,
+      semester: 3,
+      schedule: 'Tue, Thu 11:00 AM - 12:30 PM',
+      room: 'Lab 204',
+      created_at: new Date()
+    },
+    {
+      id: 'e0000000-0000-0000-0000-000000000003',
+      code: 'CS205',
+      title: 'Operating Systems',
+      department_id: 'd0000000-0000-0000-0000-000000000001',
+      teacher_id: 'b0000000-0000-0000-0000-000000000002',
+      section: 'Sec A',
+      credits: 3,
+      semester: 5,
+      schedule: 'Wed, Fri 02:00 - 03:30 PM',
+      room: 'Hall 410',
+      created_at: new Date()
+    },
+    {
+      id: 'e0000000-0000-0000-0000-000000000004',
+      code: 'CS207',
+      title: 'Software Engineering',
+      department_id: 'd0000000-0000-0000-0000-000000000001',
+      teacher_id: 'b0000000-0000-0000-0000-000000000002',
+      section: 'Sec C',
+      credits: 3,
+      semester: 5,
+      schedule: 'Mon, Thu 03:45 - 05:15 PM',
+      room: 'Seminar Room 1',
+      created_at: new Date()
+    }
+  );
+
+  // Seed Enrollments
+  const enroll = (studentId, courseId) => ({
+    id: `enr-${studentId.slice(-3)}-${courseId.slice(-3)}`,
+    student_id: studentId,
+    course_id: courseId,
+    enrollment_date: '2026-08-15',
+    status: 'ACTIVE'
+  });
+
+  // CS201: 6 students
+  ['c0000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000005', 'c0000000-0000-0000-0000-000000000006', 'c0000000-0000-0000-0000-000000000007', 'c0000000-0000-0000-0000-000000000008']
+    .forEach(sid => inMemoryStore.enrollments.push(enroll(sid, 'e0000000-0000-0000-0000-000000000001')));
+
+  // CS203: 4 students
+  ['c0000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000005', 'c0000000-0000-0000-0000-000000000006']
+    .forEach(sid => inMemoryStore.enrollments.push(enroll(sid, 'e0000000-0000-0000-0000-000000000002')));
+
+  // CS205: 4 students
+  ['c0000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000005', 'c0000000-0000-0000-0000-000000000007']
+    .forEach(sid => inMemoryStore.enrollments.push(enroll(sid, 'e0000000-0000-0000-0000-000000000003')));
+
+  // CS207: 4 students
+  ['c0000000-0000-0000-0000-000000000005', 'c0000000-0000-0000-0000-000000000006', 'c0000000-0000-0000-0000-000000000007', 'c0000000-0000-0000-0000-000000000008']
+    .forEach(sid => inMemoryStore.enrollments.push(enroll(sid, 'e0000000-0000-0000-0000-000000000004')));
+
+  // Seed Attendance Sessions across recent dates
+  const pastDates = ['2026-11-04', '2026-11-06', '2026-11-08', '2026-11-10'];
+  let attCounter = 1;
+
+  for (const c of inMemoryStore.courses) {
+    const courseEnrolled = inMemoryStore.enrollments.filter(e => e.course_id === c.id);
+    for (const d of pastDates) {
+      for (const enr of courseEnrolled) {
+        // Mostly present, occasional late or absent
+        const isAbsent = (attCounter % 11 === 0);
+        const isLate = (attCounter % 7 === 0);
+        const status = isAbsent ? 'ABSENT' : (isLate ? 'LATE' : 'PRESENT');
+        inMemoryStore.attendance.push({
+          id: `att-${attCounter++}`,
+          course_id: c.id,
+          student_id: enr.student_id,
+          attendance_date: d,
+          status,
+          source: 'MANUAL',
+          created_at: new Date(d)
+        });
+      }
+    }
+  }
+
+  // Seed Marks
+  let markCounter = 1;
+  const assessmentTypes = [
+    { type: 'Quiz 1', max: 50, weight: 10 },
+    { type: 'Midterm Exam', max: 100, weight: 30 }
+  ];
+
+  for (const c of inMemoryStore.courses) {
+    const courseEnrolled = inMemoryStore.enrollments.filter(e => e.course_id === c.id);
+    for (const asm of assessmentTypes) {
+      for (const enr of courseEnrolled) {
+        // Realistic score between 70% and 95%
+        const score = Math.round(asm.max * (0.68 + (markCounter % 30) / 100) * 10) / 10;
+        inMemoryStore.marks.push({
+          id: `mrk-${markCounter++}`,
+          course_id: c.id,
+          student_id: enr.student_id,
+          assessment_type: asm.type,
+          score_obtained: score,
+          maximum_score: asm.max,
+          weightage_percent: asm.weight,
+          created_at: new Date('2026-10-25')
+        });
+      }
+    }
+  }
+
+  // Seed Assignments created by Prof. Sarah Connor
+  inMemoryStore.assignments.push(
+    {
+      id: 'asn-001',
+      course_id: 'e0000000-0000-0000-0000-000000000002',
+      title: 'DBMS Assignment 2 – SQL Query Optimization',
+      description: 'Analyze execution plans and implement B-tree indexing strategies on the sample dataset.',
+      due_date: '2026-11-12T23:59:00Z',
+      max_score: 100,
+      created_by: 'b0000000-0000-0000-0000-000000000002',
+      created_at: new Date('2026-11-01')
+    },
+    {
+      id: 'asn-002',
+      course_id: 'e0000000-0000-0000-0000-000000000003',
+      title: 'OS Quiz 1 – Process Scheduling Analysis',
+      description: 'Short-answer assessment covering Round-Robin, Priority Preemptive, and Multi-level Feedback Queues.',
+      due_date: '2026-11-14T23:59:00Z',
+      max_score: 50,
+      created_by: 'b0000000-0000-0000-0000-000000000002',
+      created_at: new Date('2026-11-03')
+    },
+    {
+      id: 'asn-003',
+      course_id: 'e0000000-0000-0000-0000-000000000004',
+      title: 'SE Project – Phase 1 Architecture Document',
+      description: 'Submit system architectural diagrams, domain component breakdowns, and API contracts.',
+      due_date: '2026-11-17T23:59:00Z',
+      max_score: 100,
+      created_by: 'b0000000-0000-0000-0000-000000000002',
+      created_at: new Date('2026-11-05')
+    },
+    {
+      id: 'asn-004',
+      course_id: 'e0000000-0000-0000-0000-000000000001',
+      title: 'DSA Problem Set 3 – Balanced BSTs & Heaps',
+      description: 'Implement AVL tree balance rotations and max-heap priority queue operations with complexity analysis.',
+      due_date: '2026-11-20T23:59:00Z',
+      max_score: 50,
+      created_by: 'b0000000-0000-0000-0000-000000000002',
+      created_at: new Date('2026-11-06')
+    }
+  );
+
+  // Seed Submissions for DBMS Assignment 2
+  inMemoryStore.assignmentSubmissions.push(
+    {
+      id: 'sub-001',
+      assignment_id: 'asn-001',
+      student_id: 'c0000000-0000-0000-0000-000000000003',
+      file_url: 'https://storage.campusiq.edu/submissions/dbms-alex-johnson.pdf',
+      submission_date: new Date('2026-11-10T14:30:00Z'),
+      grade: null,
+      feedback: null
+    },
+    {
+      id: 'sub-002',
+      assignment_id: 'asn-001',
+      student_id: 'c0000000-0000-0000-0000-000000000004',
+      file_url: 'https://storage.campusiq.edu/submissions/dbms-sophia-miller.pdf',
+      submission_date: new Date('2026-11-10T16:45:00Z'),
+      grade: null,
+      feedback: null
+    }
+  );
+
+  // Seed Study Materials uploaded by Prof. Sarah Connor
+  inMemoryStore.studyMaterials.push(
+    {
+      id: 'mat-001',
+      course_id: 'e0000000-0000-0000-0000-000000000001',
+      title: 'CS201 Lecture Notes – Trees, Graphs & Shortest Path Algorithms.pdf',
+      file_url: 'https://storage.campusiq.edu/materials/cs201-graphs-notes.pdf',
+      file_type: 'PDF',
+      uploaded_by: 'b0000000-0000-0000-0000-000000000002',
+      created_at: new Date('2026-09-15')
+    },
+    {
+      id: 'mat-002',
+      course_id: 'e0000000-0000-0000-0000-000000000002',
+      title: 'CS203 SQL Normalization & Indexing Cheat Sheet.pdf',
+      file_url: 'https://storage.campusiq.edu/materials/cs203-normalization.pdf',
+      file_type: 'PDF',
+      uploaded_by: 'b0000000-0000-0000-0000-000000000002',
+      created_at: new Date('2026-09-20')
+    },
+    {
+      id: 'mat-003',
+      course_id: 'e0000000-0000-0000-0000-000000000003',
+      title: 'CS205 Virtual Memory & Page Replacement Slides.pptx',
+      file_url: 'https://storage.campusiq.edu/materials/cs205-virtual-memory.pptx',
+      file_type: 'SLIDES',
+      uploaded_by: 'b0000000-0000-0000-0000-000000000002',
+      created_at: new Date('2026-10-02')
+    },
+    {
+      id: 'mat-004',
+      course_id: 'e0000000-0000-0000-0000-000000000004',
+      title: 'CS207 Agile & Clean Architecture Guidelines.pdf',
+      file_url: 'https://storage.campusiq.edu/materials/cs207-clean-arch.pdf',
+      file_type: 'PDF',
+      uploaded_by: 'b0000000-0000-0000-0000-000000000002',
+      created_at: new Date('2026-10-10')
     }
   );
 }
@@ -113,6 +435,96 @@ async function initPostgresSchema(client) {
         token TEXT NOT NULL UNIQUE,
         user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS departments (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        code VARCHAR(10) NOT NULL UNIQUE,
+        name VARCHAR(255) NOT NULL,
+        head_of_department_id UUID REFERENCES users(id),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS courses (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        code VARCHAR(20) NOT NULL UNIQUE,
+        title VARCHAR(255) NOT NULL,
+        department_id UUID REFERENCES departments(id) ON DELETE CASCADE,
+        teacher_id UUID REFERENCES users(id) ON DELETE SET NULL,
+        section VARCHAR(10) DEFAULT 'Sec A',
+        credits INT NOT NULL DEFAULT 3,
+        semester INT NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS enrollments (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        student_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        course_id UUID NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+        enrollment_date DATE DEFAULT CURRENT_DATE,
+        status VARCHAR(20) DEFAULT 'ACTIVE',
+        UNIQUE (student_id, course_id)
+      );
+
+      DO $$ BEGIN
+        CREATE TYPE attendance_state AS ENUM ('PRESENT', 'ABSENT', 'LATE', 'EXCUSED');
+      EXCEPTION
+        WHEN duplicate_object THEN null;
+      END $$;
+
+      CREATE TABLE IF NOT EXISTS attendance (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        course_id UUID NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+        student_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        attendance_date DATE NOT NULL,
+        status attendance_state NOT NULL DEFAULT 'PRESENT',
+        source VARCHAR(50) DEFAULT 'MANUAL',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE (course_id, student_id, attendance_date)
+      );
+
+      CREATE TABLE IF NOT EXISTS marks (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        course_id UUID NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+        student_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        assessment_type VARCHAR(50) NOT NULL,
+        score_obtained NUMERIC(5, 2) NOT NULL,
+        maximum_score NUMERIC(5, 2) NOT NULL,
+        weightage_percent NUMERIC(5, 2),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS assignments (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        course_id UUID NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        due_date TIMESTAMP WITH TIME ZONE NOT NULL,
+        max_score NUMERIC(5, 2) DEFAULT 100.0,
+        created_by UUID REFERENCES users(id),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS assignment_submissions (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        assignment_id UUID NOT NULL REFERENCES assignments(id) ON DELETE CASCADE,
+        student_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        file_url VARCHAR(500) NOT NULL,
+        submission_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        plagiarism_score NUMERIC(4, 2),
+        grade NUMERIC(5, 2),
+        feedback TEXT,
+        UNIQUE(assignment_id, student_id)
+      );
+
+      CREATE TABLE IF NOT EXISTS study_materials (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        course_id UUID NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+        title VARCHAR(255) NOT NULL,
+        file_url VARCHAR(500) NOT NULL,
+        file_type VARCHAR(50),
+        uploaded_by UUID REFERENCES users(id),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
 
@@ -175,15 +587,24 @@ async function query(text, params = []) {
   // Handle fallback in-memory queries for Auth & User tables
   const upperQuery = text.toUpperCase();
 
+<<<<<<< HEAD
   // Find user by ID
   if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE ID =') || upperQuery.includes('WHERE ID='))) {
+=======
+  // Find user by ID (checked before email to avoid matching column lists containing 'email')
+  if (upperQuery.includes('FROM USERS') && upperQuery.includes('WHERE ID =')) {
+>>>>>>> 9d7d5bf60087b55140cb9d7166334589949cd361
     const id = params[0];
     const user = inMemoryStore.users.find(u => u.id === id);
     return { rows: user ? [user] : [], rowCount: user ? 1 : 0 };
   }
 
   // Find user by email
+<<<<<<< HEAD
   if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE EMAIL =') || upperQuery.includes('WHERE EMAIL='))) {
+=======
+  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE EMAIL') || upperQuery.includes('WHERE LOWER(EMAIL)') || upperQuery.includes('EMAIL ='))) {
+>>>>>>> 9d7d5bf60087b55140cb9d7166334589949cd361
     const email = params[0]?.toLowerCase().trim();
     const user = inMemoryStore.users.find(u => u.email.toLowerCase() === email);
     return { rows: user ? [user] : [], rowCount: user ? 1 : 0 };
