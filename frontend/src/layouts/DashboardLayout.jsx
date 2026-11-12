@@ -2,14 +2,17 @@
 import React from 'react';
 import Navbar from '../components/common/Navbar';
 import Sidebar from '../components/common/Sidebar';
+import './DashboardLayout.css';
 
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="dashboard-layout">
-      <Navbar />
-      <div className="dashboard-body">
-        <Sidebar />
-        <main className="dashboard-content">{children}</main>
+    <div className="dashboard-layout-root">
+      <Sidebar />
+      <div className="dashboard-layout-main">
+        <Navbar />
+        <main className="dashboard-layout-content">
+          {children}
+        </main>
       </div>
     </div>
   );

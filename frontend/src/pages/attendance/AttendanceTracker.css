@@ -1,0 +1,327 @@
+/* Attendance Tracker Component Styling */
+.attendance-tracker-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.attendance-header-card {
+  background: #ffffff;
+  border: 1px solid var(--color-cream-border, #dde3d5);
+  border-radius: var(--radius-card, 20px);
+  padding: 24px 28px;
+  box-shadow: 0 4px 16px rgba(8, 56, 43, 0.03);
+}
+
+.attendance-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.attendance-main-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.attendance-subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Control Filters */
+.attendance-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #f8fafc;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.control-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.control-select, .control-date-input {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 0.9rem;
+  color: #0f172a;
+  outline: none;
+  min-width: 220px;
+  transition: all 0.15s ease;
+}
+
+.control-select:focus, .control-date-input:focus {
+  border-color: #166534;
+  box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.12);
+}
+
+/* Session Summary Pill Badges */
+.session-summary-pills {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.summary-pill {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill, 9999px);
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.summary-pill.total { background: #f1f5f9; color: #334155; }
+.summary-pill.present { background: #dcfce7; color: #166534; }
+.summary-pill.absent { background: #fee2e2; color: #991b1b; }
+.summary-pill.late { background: #fef3c7; color: #92400e; }
+.summary-pill.excused { background: #dbeafe; color: #1e40af; }
+
+/* Quick Action Toolbar */
+.quick-attendance-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-group-quick {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-quick-toggle {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-quick-toggle:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.btn-submit-attendance {
+  padding: 10px 24px;
+  background: #166534;
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(22, 101, 52, 0.25);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-submit-attendance:hover:not(:disabled) {
+  background: #15803d;
+  box-shadow: 0 6px 16px rgba(22, 101, 52, 0.35);
+}
+
+.btn-submit-attendance:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Roster Table Card */
+.attendance-roster-card {
+  background: #ffffff;
+  border: 1px solid var(--color-cream-border, #dde3d5);
+  border-radius: var(--radius-card, 20px);
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(8, 56, 43, 0.03);
+  overflow-x: auto;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.attendance-table th {
+  padding: 14px 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.attendance-table td {
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.attendance-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+/* Student Cell */
+.student-profile-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.student-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #334155;
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.student-name-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.student-name {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.student-email {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.student-roll {
+  font-family: monospace;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Interactive Status Pill Buttons */
+.status-pill-group {
+  display: flex;
+  gap: 6px;
+}
+
+.status-pill-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill, 9999px);
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.status-pill-btn:hover {
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+.status-pill-btn.active.present {
+  background-color: #166534;
+  border-color: #166534;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(22, 101, 52, 0.3);
+}
+
+.status-pill-btn.active.absent {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.status-pill-btn.active.late {
+  background-color: #d97706;
+  border-color: #d97706;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+}
+
+.status-pill-btn.active.excused {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+/* Percentage Bar */
+.rate-badge {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #0f172a;
+}
+
+.rate-badge.good { color: #16a34a; }
+.rate-badge.warning { color: #d97706; }
+.rate-badge.danger { color: #dc2626; }
+
+/* History Section */
+.history-toggle-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-tab-toggle {
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+}
+
+.btn-tab-toggle.active {
+  background: #0f4c3a;
+  color: #ffffff;
+  border-color: #0f4c3a;
+}

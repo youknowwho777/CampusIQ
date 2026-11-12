@@ -4,22 +4,47 @@ import api from '../services/api';
 
 export const AuthContext = createContext(null);
 
+const safeStorage = {
+  getItem: (key) => {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        return window.localStorage.getItem(key);
+      }
+    } catch (e) {}
+    return null;
+  },
+  setItem: (key, val) => {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem(key, val);
+      }
+    } catch (e) {}
+  },
+  removeItem: (key) => {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.removeItem(key);
+      }
+    } catch (e) {}
+  }
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
+    const saved = safeStorage.getItem('campusiq_user');
     try {
-      const saved = localStorage.getItem('campusiq_user');
       return saved ? JSON.parse(saved) : null;
     } catch {
       return null;
     }
   });
 
-  const [token, setToken] = useState(() => localStorage.getItem('campusiq_token'));
-  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(() => safeStorage.getItem('campusiq_token'));
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const initAuth = async () => {
-      const savedToken = localStorage.getItem('campusiq_token');
+      const savedToken = safeStorage.getItem('campusiq_token');
       if (savedToken) {
         try {
           const res = await api.get('/auth/me');
@@ -32,19 +57,17 @@ export const AuthProvider = ({ children }) => {
               department: res.data.data.department
             };
             setUser(userData);
-            localStorage.setItem('campusiq_user', JSON.stringify(userData));
+            safeStorage.setItem('campusiq_user', JSON.stringify(userData));
           }
         } catch (err) {
-          // Token invalid or network error
           if (err.response?.status === 401) {
-            localStorage.removeItem('campusiq_token');
-            localStorage.removeItem('campusiq_user');
+            safeStorage.removeItem('campusiq_token');
+            safeStorage.removeItem('campusiq_user');
             setUser(null);
             setToken(null);
           }
         }
       }
-      setLoading(false);
     };
 
     initAuth();
@@ -53,15 +76,15 @@ export const AuthProvider = ({ children }) => {
   const loginUser = (userData, accessToken) => {
     setUser(userData);
     setToken(accessToken);
-    localStorage.setItem('campusiq_token', accessToken);
-    localStorage.setItem('campusiq_user', JSON.stringify(userData));
+    safeStorage.setItem('campusiq_token', accessToken);
+    safeStorage.setItem('campusiq_user', JSON.stringify(userData));
   };
 
   const logoutUser = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem('campusiq_token');
-    localStorage.removeItem('campusiq_user');
+    safeStorage.removeItem('campusiq_token');
+    safeStorage.removeItem('campusiq_user');
   };
 
   return (
