@@ -7,15 +7,10 @@ module.exports = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      // In development, if no token provided, fallback gracefully to Sophia Thompson
-      req.user = {
-        id: 'c0000000-0000-0000-0000-000000000004',
-        email: 'sophia.m@campusiq.edu',
-        role: 'STUDENT',
-        firstName: 'Sophia',
-        lastName: 'Thompson'
-      };
-      return next();
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required. No Bearer token provided in Authorization header.'
+      });
     }
 
     const token = authHeader.split(' ')[1];

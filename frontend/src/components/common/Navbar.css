@@ -1,5 +1,6 @@
-/* Topbar Header Styling matching CampusIQ template */
-.campusiq-topbar {
+/* Topbar Header Styling matching CampusIQ visual specification */
+.campusiq-topbar,
+.campusiq-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -9,7 +10,8 @@
 }
 
 /* Search Box Container */
-.topbar-search-box {
+.topbar-search-box,
+.navbar-search-wrapper {
   display: flex;
   align-items: center;
   background: #ffffff;
@@ -21,19 +23,25 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   gap: 10px;
   transition: all 0.2s ease;
+  position: relative;
 }
 
-.topbar-search-box:focus-within {
+.topbar-search-box:focus-within,
+.navbar-search-wrapper:focus-within {
   border-color: #10b981;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
-.search-icon {
+.search-icon,
+.search-glass-icon {
   color: #94a3b8;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
-.search-input {
+.search-input,
+.navbar-search-input {
   border: none;
   outline: none;
   background: transparent;
@@ -42,7 +50,8 @@
   color: #1e293b;
 }
 
-.search-input::placeholder {
+.search-input::placeholder,
+.navbar-search-input::placeholder {
   color: #94a3b8;
 }
 
@@ -58,13 +67,15 @@
 }
 
 /* Actions */
-.topbar-actions {
+.topbar-actions,
+.navbar-actions-right {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-.action-circle-btn {
+.action-circle-btn,
+.btn-icon-nav {
   width: 38px;
   height: 38px;
   border-radius: 50%;
@@ -80,12 +91,14 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-.action-circle-btn:hover {
+.action-circle-btn:hover,
+.btn-icon-nav:hover {
   background: #154235;
   transform: translateY(-1px);
 }
 
-.notification-btn .bell-badge-dot {
+.notification-btn .bell-badge-dot,
+.btn-icon-nav .badge-alert-dot {
   position: absolute;
   top: 7px;
   right: 8px;
@@ -96,11 +109,41 @@
   border: 1.5px solid #0f2d24;
 }
 
-.user-avatar-pill {
+.user-avatar-pill,
+.navbar-profile-pill {
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: #ffffff;
   background: #09261f;
   border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.navbar-user-initials {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #ffffff;
+}
+
+.btn-navbar-logout {
+  padding: 7px 16px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  color: #dc2626;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-navbar-logout:hover {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  transform: translateY(-1px);
 }

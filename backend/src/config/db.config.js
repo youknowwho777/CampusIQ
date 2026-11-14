@@ -588,24 +588,15 @@ async function query(text, params = []) {
   // Handle fallback in-memory queries for Auth & User tables
   const upperQuery = text.toUpperCase();
 
-<<<<<<< HEAD
-  // Find user by ID
-  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE ID =') || upperQuery.includes('WHERE ID='))) {
-=======
   // Find user by ID (checked before email to avoid matching column lists containing 'email')
-  if (upperQuery.includes('FROM USERS') && upperQuery.includes('WHERE ID =')) {
->>>>>>> 9d7d5bf60087b55140cb9d7166334589949cd361
+  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE ID =') || upperQuery.includes('WHERE ID='))) {
     const id = params[0];
     const user = inMemoryStore.users.find(u => u.id === id);
     return { rows: user ? [user] : [], rowCount: user ? 1 : 0 };
   }
 
   // Find user by email
-<<<<<<< HEAD
-  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE EMAIL =') || upperQuery.includes('WHERE EMAIL='))) {
-=======
-  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE EMAIL') || upperQuery.includes('WHERE LOWER(EMAIL)') || upperQuery.includes('EMAIL ='))) {
->>>>>>> 9d7d5bf60087b55140cb9d7166334589949cd361
+  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE EMAIL') || upperQuery.includes('WHERE LOWER(EMAIL)') || upperQuery.includes('EMAIL =') || upperQuery.includes('WHERE EMAIL='))) {
     const email = params[0]?.toLowerCase().trim();
     const user = inMemoryStore.users.find(u => u.email.toLowerCase() === email);
     return { rows: user ? [user] : [], rowCount: user ? 1 : 0 };

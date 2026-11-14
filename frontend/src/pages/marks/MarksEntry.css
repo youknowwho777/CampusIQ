@@ -1,0 +1,139 @@
+/* Marks Entry Component Styling */
+.marks-entry-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.marks-header-card {
+  background: #ffffff;
+  border: 1px solid var(--color-cream-border, #dde3d5);
+  border-radius: var(--radius-card, 20px);
+  padding: 24px 28px;
+  box-shadow: 0 4px 16px rgba(8, 56, 43, 0.03);
+}
+
+.marks-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.marks-main-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.marks-subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.marks-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #f8fafc;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.marks-score-input {
+  width: 90px;
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.marks-score-input:focus {
+  border-color: #166534;
+  box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.12);
+}
+
+.marks-score-input.error {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+}
+
+.marks-remarks-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.85rem;
+  color: #334155;
+  outline: none;
+}
+
+.marks-remarks-input:focus {
+  border-color: #166534;
+}
+
+.grade-badge-pill {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-align: center;
+  display: inline-block;
+  min-width: 34px;
+}
+
+.grade-badge-pill.grade-A { background: #dcfce7; color: #166534; }
+.grade-badge-pill.grade-B { background: #eff6ff; color: #1e40af; }
+.grade-badge-pill.grade-C { background: #fef3c7; color: #92400e; }
+.grade-badge-pill.grade-D { background: #ffedd5; color: #9a3412; }
+.grade-badge-pill.grade-F { background: #fee2e2; color: #991b1b; }
+
+/* Assessment Analytics Summary Cards */
+.marks-stats-cards-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+@media (max-width: 800px) {
+  .marks-stats-cards-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.assessment-metric-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.metric-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+}
