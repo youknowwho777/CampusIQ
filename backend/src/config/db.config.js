@@ -87,7 +87,8 @@ async function seedDefaultUsersInMemory() {
       password_hash: studentHash,
       role: 'STUDENT',
       first_name: 'Sophia',
-      last_name: 'Miller',
+      last_name: 'Thompson',
+      year: '2nd Year',
       department: 'Computer Science & Engineering',
       phone_number: '+1-555-0103',
       roll_number: 'CS2024002',
@@ -235,7 +236,7 @@ async function seedDefaultUsersInMemory() {
     .forEach(sid => inMemoryStore.enrollments.push(enroll(sid, 'e0000000-0000-0000-0000-000000000003')));
 
   // CS207: 4 students
-  ['c0000000-0000-0000-0000-000000000005', 'c0000000-0000-0000-0000-000000000006', 'c0000000-0000-0000-0000-000000000007', 'c0000000-0000-0000-0000-000000000008']
+  ['c0000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000005', 'c0000000-0000-0000-0000-000000000006', 'c0000000-0000-0000-0000-000000000007', 'c0000000-0000-0000-0000-000000000008']
     .forEach(sid => inMemoryStore.enrollments.push(enroll(sid, 'e0000000-0000-0000-0000-000000000004')));
 
   // Seed Attendance Sessions across recent dates

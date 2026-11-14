@@ -1,0 +1,493 @@
+/* Attendance Tracker Page Styles */
+.attendance-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.attendance-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.attendance-title {
+  font-size: 1.75rem;
+  font-weight: 750;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px 0;
+}
+
+.attendance-subtitle {
+  font-size: 0.92rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.btn-leave-request {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  transition: all 0.15s ease;
+}
+
+.btn-leave-request:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+/* KPI Banner */
+.attendance-kpi-banner {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 20px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.kpi-main-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kpi-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.kpi-big-number-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.kpi-big-number {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.kpi-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.kpi-status-tag.safe {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.kpi-trend-note {
+  font-size: 0.82rem;
+  color: #059669;
+  font-weight: 550;
+}
+
+.kpi-stat-boxes {
+  display: flex;
+  gap: 16px;
+}
+
+.kpi-stat-box {
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  padding: 14px 20px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.kpi-stat-num {
+  font-size: 1.5rem;
+  font-weight: 750;
+  color: #0f172a;
+}
+
+.kpi-stat-lbl {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Course Breakdown */
+.courses-attendance-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.courses-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+}
+
+.course-att-card {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+}
+
+.course-att-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.att-course-code {
+  font-size: 0.85rem;
+  font-weight: 750;
+  color: #0f172a;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.att-status-tag {
+  font-size: 0.72rem;
+  font-weight: 650;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.att-status-tag.good {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.att-status-tag.warning {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.att-course-title {
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: #1e293b;
+  margin: 0 0 14px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.att-metrics-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.att-percentage {
+  font-size: 1.4rem;
+  font-weight: 750;
+  color: #0f172a;
+}
+
+.att-classes-count {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.att-progress-track {
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.att-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+}
+
+/* History Card */
+.attendance-history-card {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.history-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.history-title-group {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.history-count {
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+.history-filters {
+  display: flex;
+  gap: 12px;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #334155;
+  outline: none;
+  cursor: pointer;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.attendance-table th {
+  padding: 12px 14px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 650;
+  border-bottom: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.attendance-table td {
+  padding: 14px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.88rem;
+  color: #334155;
+}
+
+.date-cell strong {
+  color: #0f172a;
+}
+
+.room-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-room {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.course-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-cell strong {
+  color: #0f172a;
+}
+
+.sub-title {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 650;
+  text-transform: uppercase;
+}
+
+.status-pill.present {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.status-pill.late {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status-pill.absent {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.status-pill.excused {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.remarks-cell {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #ffffff;
+  width: 520px;
+  max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.modal-form {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: #1e293b;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #10b981;
+  background: #ffffff;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-cancel {
+  padding: 9px 18px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+}
+
+.btn-submit {
+  padding: 9px 20px;
+  background: #10b981;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background: #059669;
+}

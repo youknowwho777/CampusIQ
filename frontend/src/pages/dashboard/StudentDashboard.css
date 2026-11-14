@@ -1,0 +1,609 @@
+/* Student Dashboard Styles matching the template */
+.student-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Loading state */
+.dashboard-loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+  color: #64748b;
+}
+
+.spinner-ring {
+  width: 42px;
+  height: 42px;
+  border: 3.5px solid #e2e8f0;
+  border-top-color: #10b981;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 1. Hero Banner */
+.dashboard-hero-banner {
+  position: relative;
+  background: #fbfbfd;
+  border-radius: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  overflow: hidden;
+  min-height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.hero-content {
+  padding: 30px 36px;
+  z-index: 2;
+  max-width: 55%;
+}
+
+.hero-greeting-sub {
+  font-size: 1.15rem;
+  color: #4b5563;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.hero-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.hero-greeting-name {
+  font-size: 2.5rem;
+  font-weight: 750;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Sun ray burst accent next to Sophia! \ | / */
+.hero-sparkle-rays {
+  display: inline-flex;
+  gap: 3.5px;
+  align-items: center;
+  height: 24px;
+}
+
+.hero-sparkle-rays .ray {
+  display: block;
+  width: 2.5px;
+  background-color: #f59e0b;
+  border-radius: 2px;
+}
+
+.hero-sparkle-rays .ray-1 {
+  height: 12px;
+  transform: rotate(-35deg) translate(1px, -2px);
+}
+
+.hero-sparkle-rays .ray-2 {
+  height: 16px;
+}
+
+.hero-sparkle-rays .ray-3 {
+  height: 12px;
+  transform: rotate(35deg) translate(-1px, -2px);
+}
+
+.hero-description {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 450;
+}
+
+.hero-illustration-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-campus-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: right center;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.5) 20%, black 50%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.5) 20%, black 50%);
+}
+
+/* 2. Stat Metric Cards Grid */
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 18px;
+  padding: 20px 22px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 110px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* Subtle pastel background glows matching cards in template */
+.stat-card.stat-attendance {
+  background: linear-gradient(135deg, #ffffff 65%, #f0fdf4 100%);
+}
+
+.stat-card.stat-cgpa {
+  background: linear-gradient(135deg, #ffffff 65%, #eff6ff 100%);
+}
+
+.stat-card.stat-credits {
+  background: linear-gradient(135deg, #ffffff 65%, #fefce8 100%);
+}
+
+.stat-card.stat-tasks {
+  background: linear-gradient(135deg, #ffffff 65%, #fff7ed 100%);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Icon Box */
+.stat-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-green {
+  background: #e8f9ee;
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.icon-blue {
+  background: #e0f2fe;
+  color: #0284c7;
+  border: 1px solid rgba(2, 132, 199, 0.25);
+}
+
+.icon-amber {
+  background: #fef3c7;
+  color: #d97706;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+}
+
+.icon-peach {
+  background: #ffedd5;
+  color: #ea580c;
+  border: 1px solid rgba(234, 88, 12, 0.25);
+}
+
+.stat-meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #475569;
+  font-weight: 550;
+  margin-bottom: 4px;
+}
+
+.stat-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.stat-number {
+  font-size: 1.85rem;
+  font-weight: 750;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.stat-trend-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 0.75rem;
+  font-weight: 650;
+  padding: 2px 7px;
+  border-radius: 9999px;
+}
+
+/* Progress bar inside Credits card */
+.stat-progress-track {
+  width: 50%;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 9999px;
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+.stat-progress-fill.fill-amber {
+  height: 100%;
+  background: #f59e0b;
+  border-radius: 9999px;
+}
+
+/* Bottom green accent bar in Attendance */
+.stat-bottom-accent-bar.bar-green {
+  width: 45%;
+  height: 5px;
+  background: #10b981;
+  border-radius: 9999px;
+  margin-top: 14px;
+}
+
+/* 3. Lower Content Split Grid */
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 24px;
+}
+
+.dashboard-content-card {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 20px;
+  padding: 24px 26px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 4px;
+}
+
+.card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-header-icon.green-icon {
+  color: #0f4c3a;
+}
+
+.card-main-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.card-subtitle-tag {
+  font-size: 0.85rem;
+  font-weight: 450;
+  color: #64748b;
+}
+
+.card-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0f4c3a;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.card-action-link:hover {
+  color: #059669;
+  transform: translateX(2px);
+}
+
+/* Course List in Left Card */
+.courses-list-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.course-item-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  transition: background 0.15s ease;
+}
+
+.course-item-row:hover {
+  background: #f8fafc;
+}
+
+.course-badge-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.course-icon-code {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.course-icon-database {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.course-icon-monitor {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.course-icon-cube {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.course-info-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.course-code-tag {
+  font-size: 0.9rem;
+  font-weight: 750;
+  color: #0f172a;
+  min-width: 58px;
+}
+
+.course-name-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #334155;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Progress bar inside course row */
+.course-progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.course-progress-bar-bg {
+  flex: 1;
+  height: 7px;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.course-progress-bar-fill {
+  height: 100%;
+  background: #115e49;
+  border-radius: 9999px;
+  transition: width 0.6s ease;
+}
+
+.course-percentage-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+  min-width: 34px;
+  text-align: right;
+}
+
+/* Upcoming Timeline in Right Card */
+.upcoming-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item-row {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  position: relative;
+  min-height: 64px;
+}
+
+.timeline-axis {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 14px;
+  flex-shrink: 0;
+  padding-top: 14px;
+}
+
+.timeline-node-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-danger {
+  background: #991b1b;
+}
+
+.dot-primary {
+  background: #0284c7;
+}
+
+.dot-success {
+  background: #15803d;
+}
+
+.timeline-connector-line {
+  width: 1.5px;
+  flex: 1;
+  background: #e2e8f0;
+  margin: 4px 0;
+}
+
+.timeline-content-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  transition: background 0.15s ease;
+}
+
+.timeline-content-box:hover {
+  background: #f8fafc;
+}
+
+.upcoming-type-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-document {
+  background: #ffe4e6;
+  color: #e11d48;
+}
+
+.icon-quiz {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.icon-code {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.upcoming-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.upcoming-title {
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upcoming-due-date {
+  font-size: 0.78rem;
+  color: #64748b;
+  display: block;
+}
+
+.upcoming-badge-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.pill-danger {
+  background: #ffe4e6;
+  color: #e11d48;
+}
+
+.pill-primary {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.pill-success {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .dashboard-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    max-width: 100%;
+  }
+  .hero-illustration-wrapper {
+    display: none;
+  }
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,30 +1,28 @@
-// Navigation sidebar component with role-based active styling and CampusIQ branding
-import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+// Navigation sidebar component with student navigation, user profile, and session logout
+import React, { useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import './Sidebar.css';
 
 const Sidebar = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  const teacherName = user?.name || 'Prof. Sarah Connor';
-  const departmentName = user?.department || 'CSE';
-  const roleName = user?.role || 'TEACHER';
-
-  // Get user initials for avatar
-  const initials = teacherName
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0].toUpperCase())
-    .join('') || 'SC';
+  const studentName = user?.name || 'Sophia Thompson';
+  const departmentMeta = `${user?.department || 'CSE'} • ${user?.year || '2nd Year'}`;
 
   const isActive = (path) => {
-    if (path === '/teacher' || path === '/dashboard') {
-      return location.pathname === '/teacher' || location.pathname === '/dashboard';
+    if (path === '/dashboard') {
+      return location.pathname === '/' || location.pathname === '/dashboard';
     }
     return location.pathname.startsWith(path);
+  };
+
+  const handleLogout = () => {
+    if (logout) logout();
+    navigate('/login');
   };
 
   return (
@@ -43,32 +41,57 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* 2. User Profile Card */}
-      <div className="sidebar-user-card">
-        <div className="user-avatar-circle">
-          {initials}
-        </div>
-        <div className="user-details-box">
-          <div className="user-full-name">{teacherName}</div>
-          <div className="user-role-meta">
-            <span>{departmentName}</span>
-            <span>•</span>
-            <span>{roleName === 'TEACHER' ? 'Faculty' : roleName}</span>
+      {/* 2. User Profile Card with Dropdown */}
+      <div className="sidebar-user-card-wrapper">
+        <div
+          className="sidebar-user-card"
+          onClick={() => setShowProfileMenu(!showProfileMenu)}
+          title="Click to view profile options or log out"
+        >
+          <div className="user-avatar-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <div className="user-details-box">
+            <div className="user-full-name">{studentName}</div>
+            <div className="user-role-meta">{departmentMeta}</div>
+          </div>
+          <div className={`user-chevron ${showProfileMenu ? 'open' : ''}`} aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </div>
         </div>
-        <div className="user-chevron" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </div>
+
+        {/* Profile Dropdown */}
+        {showProfileMenu && (
+          <div className="user-dropdown-popover">
+            <div className="user-popover-info">
+              <span className="popover-name">{studentName}</span>
+              <span className="popover-email">{user?.email || 'sophia.m@campusiq.edu'}</span>
+              <span className="popover-role">Role: Enrolled Student</span>
+            </div>
+            <div className="popover-divider"></div>
+            <button type="button" className="popover-btn logout" onClick={handleLogout}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              <span>Log Out & Switch Account</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* 3. Navigation Links */}
       <nav className="sidebar-nav">
         {/* Dashboard */}
         <NavLink
-          to="/teacher"
-          className={`nav-link-item ${isActive('/teacher') ? 'active' : ''}`}
+          to="/dashboard"
+          className={`nav-link-item ${isActive('/dashboard') ? 'active' : ''}`}
         >
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -79,41 +102,24 @@ const Sidebar = () => {
           <span className="nav-item-label">Dashboard</span>
         </NavLink>
 
-        {/* My Classes */}
+        {/* My Courses */}
         <NavLink
-          to="/teacher/classes"
-          className={`nav-link-item ${isActive('/teacher/classes') ? 'active' : ''}`}
+          to="/courses"
+          className={`nav-link-item ${isActive('/courses') ? 'active' : ''}`}
         >
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
-              <path d="M6 6h10" />
-              <path d="M6 10h10" />
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
             </svg>
           </span>
-          <span className="nav-item-label">My Classes</span>
-        </NavLink>
-
-        {/* Students */}
-        <NavLink
-          to="/teacher/students"
-          className={`nav-link-item ${isActive('/teacher/students') ? 'active' : ''}`}
-        >
-          <span className="nav-item-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          </span>
-          <span className="nav-item-label">Students</span>
+          <span className="nav-item-label">My Courses</span>
         </NavLink>
 
         {/* Attendance */}
         <NavLink
-          to="/teacher/attendance"
-          className={`nav-link-item ${isActive('/teacher/attendance') ? 'active' : ''}`}
+          to="/attendance"
+          className={`nav-link-item ${isActive('/attendance') ? 'active' : ''}`}
         >
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -127,11 +133,8 @@ const Sidebar = () => {
           <span className="nav-item-label">Attendance</span>
         </NavLink>
 
-        {/* Marks & Grades */}
-        <NavLink
-          to="/teacher/marks"
-          className={`nav-link-item ${isActive('/teacher/marks') ? 'active' : ''}`}
-        >
+        {/* Grades & Records */}
+        <div className="nav-link-item coming-soon">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="20" x2="18" y2="10" />
@@ -139,14 +142,11 @@ const Sidebar = () => {
               <line x1="6" y1="20" x2="6" y2="14" />
             </svg>
           </span>
-          <span className="nav-item-label">Marks & Grades</span>
-        </NavLink>
+          <span className="nav-item-label">Grades & Records</span>
+        </div>
 
         {/* Assignments */}
-        <NavLink
-          to="/teacher/assignments"
-          className={`nav-link-item ${isActive('/teacher/assignments') ? 'active' : ''}`}
-        >
+        <div className="nav-link-item coming-soon">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
@@ -155,13 +155,10 @@ const Sidebar = () => {
             </svg>
           </span>
           <span className="nav-item-label">Assignments</span>
-        </NavLink>
+        </div>
 
-        {/* Study Materials */}
-        <NavLink
-          to="/teacher/materials"
-          className={`nav-link-item ${isActive('/teacher/materials') ? 'active' : ''}`}
-        >
+        {/* Resources */}
+        <div className="nav-link-item coming-soon">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polygon points="12 2 2 7 12 12 22 7 12 2" />
@@ -169,28 +166,25 @@ const Sidebar = () => {
               <polyline points="2 12 12 17 22 12" />
             </svg>
           </span>
-          <span className="nav-item-label">Study Materials</span>
-        </NavLink>
+          <span className="nav-item-label">Resources</span>
+        </div>
 
         {/* Smart Tools Section */}
         <div className="nav-group-header">Smart Tools</div>
 
-        <NavLink
-          to="/teacher/analytics"
-          className={`nav-link-item ${isActive('/teacher/analytics') ? 'active' : ''}`}
-        >
+        <div className="nav-link-item coming-soon has-submenu">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
             </svg>
           </span>
           <span className="nav-item-label">AI & Analytics</span>
-        </NavLink>
+          <svg className="submenu-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
 
-        <NavLink
-          to="/teacher/attendance/ocr"
-          className={`nav-link-item ${isActive('/teacher/attendance/ocr') ? 'active' : ''}`}
-        >
+        <div className="nav-link-item coming-soon">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 7V5a2 2 0 0 1 2-2h2" />
@@ -201,13 +195,10 @@ const Sidebar = () => {
             </svg>
           </span>
           <span className="nav-item-label">OCR Documents</span>
-        </NavLink>
+        </div>
 
-        {/* Other Platform Features */}
-        <NavLink
-          to="/teacher/notifications"
-          className={`nav-link-item ${isActive('/teacher/notifications') ? 'active' : ''}`}
-        >
+        {/* Secondary Nav Features */}
+        <div className="nav-link-item coming-soon">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
@@ -216,12 +207,9 @@ const Sidebar = () => {
           </span>
           <span className="nav-item-label">Notifications</span>
           <span className="nav-badge-dot" aria-label="Unread updates"></span>
-        </NavLink>
+        </div>
 
-        <NavLink
-          to="/teacher/reports"
-          className={`nav-link-item ${isActive('/teacher/reports') ? 'active' : ''}`}
-        >
+        <div className="nav-link-item coming-soon">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -232,12 +220,9 @@ const Sidebar = () => {
             </svg>
           </span>
           <span className="nav-item-label">Reports</span>
-        </NavLink>
+        </div>
 
-        <NavLink
-          to="/teacher/help"
-          className={`nav-link-item ${isActive('/teacher/help') ? 'active' : ''}`}
-        >
+        <div className="nav-link-item coming-soon">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="12" cy="12" r="10" />
@@ -246,12 +231,9 @@ const Sidebar = () => {
             </svg>
           </span>
           <span className="nav-item-label">Help & Support</span>
-        </NavLink>
+        </div>
 
-        <NavLink
-          to="/teacher/settings"
-          className={`nav-link-item ${isActive('/teacher/settings') ? 'active' : ''}`}
-        >
+        <div className="nav-link-item coming-soon">
           <span className="nav-item-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="12" cy="12" r="3" />
@@ -259,7 +241,19 @@ const Sidebar = () => {
             </svg>
           </span>
           <span className="nav-item-label">Settings</span>
-        </NavLink>
+        </div>
+
+        {/* Explicit Log Out Link */}
+        <div className="nav-link-item logout-link-item" onClick={handleLogout} title="Sign out and return to Login screen">
+          <span className="nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </span>
+          <span className="nav-item-label">Log Out</span>
+        </div>
       </nav>
 
       {/* 4. Campus Building Silhouette Bottom Decoration */}
@@ -270,7 +264,7 @@ const Sidebar = () => {
           <rect x="130" y="22" width="10" height="12" fill="#041d16" />
           <rect x="192" y="32" width="6" height="8" fill="#041d16" />
         </svg>
-        <div className="sidebar-version-tag">CampusIQ v1.0 • Academic Edition</div>
+        <div className="sidebar-version-tag">CampusIQ • Academic Edition</div>
       </div>
     </aside>
   );

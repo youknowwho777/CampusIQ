@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   const [token, setToken] = useState(() => localStorage.getItem('campusiq_token'));
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const initAuth = async () => {
@@ -29,7 +29,8 @@ export const AuthProvider = ({ children }) => {
               name: `${res.data.data.first_name || res.data.data.firstName || ''} ${res.data.data.last_name || res.data.data.lastName || ''}`.trim() || res.data.data.email,
               email: res.data.data.email,
               role: res.data.data.role,
-              department: res.data.data.department
+              department: res.data.data.department,
+              year: res.data.data.year || '2nd Year'
             };
             setUser(userData);
             localStorage.setItem('campusiq_user', JSON.stringify(userData));
