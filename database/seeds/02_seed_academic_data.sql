@@ -7,7 +7,7 @@ ON CONFLICT (code) DO NOTHING;
 -- Seed Sample Students
 INSERT INTO users (id, email, password_hash, role, first_name, last_name, department) VALUES
 ('c0000000-0000-0000-0000-000000000003', 'student@campusiq.edu', '$2b$10$3zR6bLh7vE3K8k5G6jH7.OmQ7jX.N3nL6rK4vU1sY5xY1mP8dG3u', 'STUDENT', 'Alex', 'Johnson', 'Computer Science & Engineering'),
-('c0000000-0000-0000-0000-000000000004', 'sophia.m@campusiq.edu', '$2b$10$3zR6bLh7vE3K8k5G6jH7.OmQ7jX.N3nL6rK4vU1sY5xY1mP8dG3u', 'STUDENT', 'Sophia', 'Miller', 'Computer Science & Engineering'),
+('c0000000-0000-0000-0000-000000000004', 'sophia.m@campusiq.edu', '$2b$10$3zR6bLh7vE3K8k5G6jH7.OmQ7jX.N3nL6rK4vU1sY5xY1mP8dG3u', 'STUDENT', 'Sophia', 'Thompson', 'Computer Science & Engineering'),
 ('c0000000-0000-0000-0000-000000000005', 'liam.c@campusiq.edu', '$2b$10$3zR6bLh7vE3K8k5G6jH7.OmQ7jX.N3nL6rK4vU1sY5xY1mP8dG3u', 'STUDENT', 'Liam', 'Chen', 'Computer Science & Engineering'),
 ('c0000000-0000-0000-0000-000000000006', 'emma.d@campusiq.edu', '$2b$10$3zR6bLh7vE3K8k5G6jH7.OmQ7jX.N3nL6rK4vU1sY5xY1mP8dG3u', 'STUDENT', 'Emma', 'Davis', 'Computer Science & Engineering'),
 ('c0000000-0000-0000-0000-000000000007', 'noah.p@campusiq.edu', '$2b$10$3zR6bLh7vE3K8k5G6jH7.OmQ7jX.N3nL6rK4vU1sY5xY1mP8dG3u', 'STUDENT', 'Noah', 'Patel', 'Computer Science & Engineering'),
@@ -40,6 +40,7 @@ INSERT INTO enrollments (student_id, course_id, status) VALUES
 ('c0000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000003', 'ACTIVE'),
 ('c0000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000003', 'ACTIVE'),
 
+('c0000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000004', 'ACTIVE'),
 ('c0000000-0000-0000-0000-000000000006', 'e0000000-0000-0000-0000-000000000004', 'ACTIVE'),
 ('c0000000-0000-0000-0000-000000000007', 'e0000000-0000-0000-0000-000000000004', 'ACTIVE'),
 ('c0000000-0000-0000-0000-000000000008', 'e0000000-0000-0000-0000-000000000004', 'ACTIVE')

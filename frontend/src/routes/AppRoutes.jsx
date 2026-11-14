@@ -2,15 +2,19 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 // Auth Pages
 import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import ForgotPassword from '../pages/auth/ForgotPassword';
 
-// Dashboard & Role Pages
+// Role & Dashboard Pages
 import Dashboard from '../pages/dashboard/Dashboard';
+import StudentDashboard from '../pages/dashboard/StudentDashboard';
 import TeacherDashboard from '../pages/dashboard/TeacherDashboard';
+
+// Course, Attendance & Academic Feature Pages
 import CoursesList from '../pages/courses/CoursesList';
 import CourseDetails from '../pages/courses/CourseDetails';
 import StudentsList from '../pages/students/StudentsList';
@@ -29,12 +33,38 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        {/* Generic Dashboard Landing (Role Aware) */}
+        {/* Role-Aware Dashboard Landing */}
         <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Protected Student Experience Routes */}
+        <Route
+          path="/courses"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <CoursesList />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-courses"
+          element={<Navigate to="/courses" replace />}
+        />
+        <Route
+          path="/attendance"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <AttendanceTracker />
+              </DashboardLayout>
             </ProtectedRoute>
           }
         />
@@ -113,8 +143,10 @@ const AppRoutes = () => {
           }
         />
 
-        {/* Fallback & Not Found */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        {/* Root Route (Redirects to /dashboard, where ProtectedRoute / role logic directs user) */}
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+        {/* Catch-all 404 Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

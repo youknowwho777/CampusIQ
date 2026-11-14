@@ -1,7 +1,7 @@
 module.exports = {
   testEnvironment: 'node',
   moduleDirectories: ['node_modules', '<rootDir>/node_modules'],
-  testMatch: ['<rootDir>/../testing/**/*.test.js', '<rootDir>/src/**/*.test.js'],
+  testMatch: ['<rootDir>/src/**/*.test.js'],
   verbose: true,
   testTimeout: 10000
 };

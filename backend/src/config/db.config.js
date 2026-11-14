@@ -87,7 +87,8 @@ async function seedDefaultUsersInMemory() {
       password_hash: studentHash,
       role: 'STUDENT',
       first_name: 'Sophia',
-      last_name: 'Miller',
+      last_name: 'Thompson',
+      year: '2nd Year',
       department: 'Computer Science & Engineering',
       phone_number: '+1-555-0103',
       roll_number: 'CS2024002',
@@ -235,7 +236,7 @@ async function seedDefaultUsersInMemory() {
     .forEach(sid => inMemoryStore.enrollments.push(enroll(sid, 'e0000000-0000-0000-0000-000000000003')));
 
   // CS207: 4 students
-  ['c0000000-0000-0000-0000-000000000005', 'c0000000-0000-0000-0000-000000000006', 'c0000000-0000-0000-0000-000000000007', 'c0000000-0000-0000-0000-000000000008']
+  ['c0000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000005', 'c0000000-0000-0000-0000-000000000006', 'c0000000-0000-0000-0000-000000000007', 'c0000000-0000-0000-0000-000000000008']
     .forEach(sid => inMemoryStore.enrollments.push(enroll(sid, 'e0000000-0000-0000-0000-000000000004')));
 
   // Seed Attendance Sessions across recent dates
@@ -588,14 +589,14 @@ async function query(text, params = []) {
   const upperQuery = text.toUpperCase();
 
   // Find user by ID (checked before email to avoid matching column lists containing 'email')
-  if (upperQuery.includes('FROM USERS') && upperQuery.includes('WHERE ID =')) {
+  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE ID =') || upperQuery.includes('WHERE ID='))) {
     const id = params[0];
     const user = inMemoryStore.users.find(u => u.id === id);
     return { rows: user ? [user] : [], rowCount: user ? 1 : 0 };
   }
 
   // Find user by email
-  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE EMAIL') || upperQuery.includes('WHERE LOWER(EMAIL)') || upperQuery.includes('EMAIL ='))) {
+  if (upperQuery.includes('FROM USERS') && (upperQuery.includes('WHERE EMAIL') || upperQuery.includes('WHERE LOWER(EMAIL)') || upperQuery.includes('EMAIL =') || upperQuery.includes('WHERE EMAIL='))) {
     const email = params[0]?.toLowerCase().trim();
     const user = inMemoryStore.users.find(u => u.email.toLowerCase() === email);
     return { rows: user ? [user] : [], rowCount: user ? 1 : 0 };
@@ -604,8 +605,8 @@ async function query(text, params = []) {
   // List users with optional role filtering
   if (upperQuery.includes('SELECT') && upperQuery.includes('FROM USERS')) {
     let result = [...inMemoryStore.users];
-    if (params.length > 0 && params[0]) {
-      result = result.filter(u => u.role === params[0]);
+    if (upperQuery.includes('WHERE ROLE') && params.length > 0 && params[0]) {
+      result = result.filter(u => u.role === params[0].toUpperCase());
     }
     return { rows: result, rowCount: result.length };
   }
