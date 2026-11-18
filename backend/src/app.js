@@ -32,6 +32,8 @@ app.use('/api/v1/marks', require('./modules/marks/marks.routes'));
 app.use('/api/v1/materials', require('./modules/materials/materials.routes'));
 app.use('/api/v1/assignments', require('./modules/assignments/assignments.routes'));
 app.use('/api/v1/notifications', require('./modules/notifications/notifications.routes'));
+app.use('/api/v1/announcements', require('./modules/announcements/announcements.routes'));
+app.use('/api/v1/admin', require('./modules/admin/admin.routes'));
 app.use('/api/v1/analytics', require('./modules/analytics/analytics.routes'));
 app.use('/api/v1/ai', require('./modules/ai/ai.routes'));
 

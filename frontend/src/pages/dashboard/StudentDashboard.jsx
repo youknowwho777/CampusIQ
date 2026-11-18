@@ -2,18 +2,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { studentService } from '../../services/student.service';
+import announcementService from '../../services/announcement.service';
 import campusHeroImg from '../../assets/images/campus_hero_illustration.png';
 import './StudentDashboard.css';
 
 const StudentDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
+  const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadDashboard = async () => {
       try {
-        const data = await studentService.getDashboard();
+        const [data, annRes] = await Promise.all([
+          studentService.getDashboard(),
+          announcementService.getAll({ targetRole: 'STUDENT' }).catch(() => ({ data: [] }))
+        ]);
         setDashboardData(data);
+        if (annRes?.data) setAnnouncements(annRes.data);
       } catch (err) {
         console.error('Failed to load dashboard data:', err);
       } finally {
@@ -305,6 +311,85 @@ const StudentDashboard = () => {
           </div>
         </div>
       </section>
+
+      {/* 4. Campus Announcements Section */}
+      {announcements.length > 0 && (
+        <section style={{
+          background: '#ffffff',
+          borderRadius: '20px',
+          border: '1px solid #dde3d5',
+          padding: '24px 28px',
+          boxShadow: '0 4px 16px rgba(8, 56, 43, 0.03)',
+          marginTop: '24px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#08382b" strokeWidth="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                Campus Announcements & Bulletins
+              </h2>
+            </div>
+            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#166534', background: '#dcfce7', padding: '4px 10px', borderRadius: '9999px' }}>
+              Official Notices
+            </span>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>
+            {announcements.map((ann) => (
+              <div
+                key={ann.id}
+                style={{
+                  background: ann.isPinned ? '#fffdf7' : '#f8fafc',
+                  border: ann.isPinned ? '1px solid #fde68a' : '1px solid #e2e8f0',
+                  borderRadius: '14px',
+                  padding: '16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  gap: '10px'
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                    {ann.isPinned && (
+                      <span style={{ fontSize: '0.7rem', fontWeight: 700, background: '#fef3c7', color: '#b45309', padding: '2px 6px', borderRadius: '4px' }}>
+                        PINNED
+                      </span>
+                    )}
+                    <span style={{ fontSize: '0.7rem', fontWeight: 700, background: '#e2e8f0', color: '#334155', padding: '2px 6px', borderRadius: '4px' }}>
+                      {ann.category}
+                    </span>
+                    <span style={{
+                      fontSize: '0.7rem',
+                      fontWeight: 700,
+                      background: ann.priority === 'URGENT' ? '#fee2e2' : ann.priority === 'HIGH' ? '#ffedd5' : '#f1f5f9',
+                      color: ann.priority === 'URGENT' ? '#b91c1c' : ann.priority === 'HIGH' ? '#c2410c' : '#64748b',
+                      padding: '2px 6px',
+                      borderRadius: '4px'
+                    }}>
+                      {ann.priority}
+                    </span>
+                  </div>
+                  <h4 style={{ fontSize: '0.96rem', fontWeight: 700, color: '#0f172a', margin: '0 0 6px 0' }}>
+                    {ann.title}
+                  </h4>
+                  <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.45, margin: 0 }}>
+                    {ann.content}
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.74rem', color: '#94a3b8', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '8px' }}>
+                  <span>{ann.authorName}</span>
+                  <span>{new Date(ann.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };

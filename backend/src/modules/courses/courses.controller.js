@@ -19,3 +19,30 @@ exports.getById = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.create = async (req, res, next) => {
+  try {
+    const data = await service.create(req.body);
+    return res.status(201).json({ success: true, data, message: 'Course created successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.update = async (req, res, next) => {
+  try {
+    const data = await service.update(req.params.id, req.body);
+    return success(res, data, 'Course updated successfully');
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.delete = async (req, res, next) => {
+  try {
+    const data = await service.delete(req.params.id);
+    return success(res, data, data.message);
+  } catch (err) {
+    next(err);
+  }
+};

@@ -63,3 +63,33 @@ exports.getById = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.create = async (req, res, next) => {
+  try {
+    const adminService = require('../admin/admin.service');
+    const data = await adminService.createTeacher(req.body);
+    return res.status(201).json({ success: true, data, message: 'Faculty member created successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.update = async (req, res, next) => {
+  try {
+    const adminService = require('../admin/admin.service');
+    const data = await adminService.updateTeacher(req.params.id, req.body);
+    return success(res, data, 'Faculty profile updated successfully');
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.delete = async (req, res, next) => {
+  try {
+    const adminService = require('../admin/admin.service');
+    const data = await adminService.deleteTeacher(req.params.id);
+    return success(res, data, data.message);
+  } catch (err) {
+    next(err);
+  }
+};

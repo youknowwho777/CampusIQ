@@ -16,3 +16,18 @@ exports.findById = async (id) => {
   }
   return inMemoryStore.courses.find(c => c.id === id) || null;
 };
+
+exports.create = async (data) => {
+  const adminService = require('../admin/admin.service');
+  return adminService.createCourse(data);
+};
+
+exports.update = async (id, data) => {
+  const adminService = require('../admin/admin.service');
+  return adminService.updateCourse(id, data);
+};
+
+exports.delete = async (id) => {
+  const adminService = require('../admin/admin.service');
+  return adminService.deleteCourse(id);
+};

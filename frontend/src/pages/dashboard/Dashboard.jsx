@@ -3,13 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import TeacherDashboard from './TeacherDashboard';
 import StudentDashboard from './StudentDashboard';
+import AdminDashboard from './AdminDashboard';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import './Dashboard.css';
 
 /**
  * Dashboard Page
  * Role-aware post-authentication landing view.
+ * If authenticated user is an ADMIN, renders AdminDashboard.
  * If authenticated user is a TEACHER or faculty, renders TeacherDashboard.
+ * Defaults to StudentDashboard.
  */
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,6 +28,11 @@ const Dashboard = () => {
 
   const displayName = user?.name || 'Academic User';
   const displayRole = (user?.role || 'STUDENT').toUpperCase();
+
+  // If authenticated user is an Administrator, direct them to AdminDashboard
+  if (displayRole === 'ADMIN') {
+    return <AdminDashboard />;
+  }
 
   // If authenticated user is a Teacher, direct them to TeacherDashboard
   if (displayRole === 'TEACHER' || displayRole === 'FACULTY' || displayRole === 'HOD') {

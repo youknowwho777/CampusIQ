@@ -13,6 +13,14 @@ import ForgotPassword from '../pages/auth/ForgotPassword';
 import Dashboard from '../pages/dashboard/Dashboard';
 import StudentDashboard from '../pages/dashboard/StudentDashboard';
 import TeacherDashboard from '../pages/dashboard/TeacherDashboard';
+import AdminDashboard from '../pages/dashboard/AdminDashboard';
+
+// Admin Module Feature Pages
+import AdminStudents from '../pages/admin/AdminStudents';
+import AdminTeachers from '../pages/admin/AdminTeachers';
+import AdminCourses from '../pages/admin/AdminCourses';
+import AdminAttendance from '../pages/admin/AdminAttendance';
+import AdminAnnouncements from '../pages/admin/AdminAnnouncements';
 
 // Course, Attendance & Academic Feature Pages
 import CoursesList from '../pages/courses/CoursesList';
@@ -65,6 +73,64 @@ const AppRoutes = () => {
               <DashboardLayout>
                 <AttendanceTracker />
               </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Module Dedicated Routes (Guarded for ADMIN) */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/students"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminStudents />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/teachers"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminTeachers />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/courses"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminCourses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/attendance"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminAttendance />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/announcements"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <AdminAnnouncements />
             </ProtectedRoute>
           }
         />

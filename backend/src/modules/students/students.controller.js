@@ -20,6 +20,36 @@ exports.getById = async (req, res, next) => {
   }
 };
 
+exports.create = async (req, res, next) => {
+  try {
+    const adminService = require('../admin/admin.service');
+    const data = await adminService.createStudent(req.body);
+    return res.status(201).json({ success: true, data, message: 'Student created successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.update = async (req, res, next) => {
+  try {
+    const adminService = require('../admin/admin.service');
+    const data = await adminService.updateStudent(req.params.id, req.body);
+    return success(res, data, 'Student updated successfully');
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.delete = async (req, res, next) => {
+  try {
+    const adminService = require('../admin/admin.service');
+    const data = await adminService.deleteStudent(req.params.id);
+    return success(res, data, data.message);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // GET /api/v1/students/dashboard
 exports.getDashboard = async (req, res, next) => {
   try {

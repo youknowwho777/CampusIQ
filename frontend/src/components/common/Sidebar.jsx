@@ -10,24 +10,31 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
+  const isAdmin = user?.role === 'ADMIN';
   const isStudent = user?.role === 'STUDENT';
 
+  const adminName = user?.name || 'Administrator';
   const teacherName = user?.name || 'Prof. Sarah Connor';
   const studentName = user?.name || 'Sophia Thompson';
-  const activeName = isStudent ? studentName : teacherName;
+  const activeName = isAdmin ? adminName : (isStudent ? studentName : teacherName);
 
-  const departmentMeta = isStudent
-    ? `${user?.department || 'CSE'} • ${user?.year || '2nd Year'}`
-    : `${user?.department || 'CSE'} • ${user?.role === 'TEACHER' ? 'Faculty' : (user?.role || 'Faculty')}`;
+  const departmentMeta = isAdmin
+    ? 'CampusIQ Administration'
+    : (isStudent
+      ? `${user?.department || 'CSE'} • ${user?.year || '2nd Year'}`
+      : `${user?.department || 'CSE'} • ${user?.role === 'TEACHER' ? 'Faculty' : (user?.role || 'Faculty')}`);
 
   const initials = activeName
     .split(' ')
     .filter(Boolean)
     .slice(0, 2)
     .map((w) => w[0].toUpperCase())
-    .join('') || (isStudent ? 'ST' : 'SC');
+    .join('') || (isAdmin ? 'AD' : (isStudent ? 'ST' : 'SC'));
 
   const isActive = (path) => {
+    if (path === '/admin' || path === '/admin/dashboard') {
+      return location.pathname === '/admin' || location.pathname === '/admin/dashboard' || (isAdmin && location.pathname === '/dashboard');
+    }
     if (path === '/teacher' || path === '/dashboard') {
       return location.pathname === '/teacher' || location.pathname === '/dashboard' || (isStudent && location.pathname === '/');
     }
@@ -248,6 +255,110 @@ const Sidebar = () => {
               </span>
               <span className="nav-item-label">Settings</span>
             </div>
+          </>
+        ) : isAdmin ? (
+          /* Administrator Navigation Links */
+          <>
+            <NavLink
+              to="/admin"
+              className={`nav-link-item ${isActive('/admin') ? 'active' : ''}`}
+            >
+              <span className="nav-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                </svg>
+              </span>
+              <span className="nav-item-label">Dashboard</span>
+            </NavLink>
+
+            <NavLink
+              to="/admin/students"
+              className={`nav-link-item ${isActive('/admin/students') ? 'active' : ''}`}
+            >
+              <span className="nav-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </span>
+              <span className="nav-item-label">Students</span>
+            </NavLink>
+
+            <NavLink
+              to="/admin/teachers"
+              className={`nav-link-item ${isActive('/admin/teachers') ? 'active' : ''}`}
+            >
+              <span className="nav-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+              <span className="nav-item-label">Faculty & Teachers</span>
+            </NavLink>
+
+            <NavLink
+              to="/admin/courses"
+              className={`nav-link-item ${isActive('/admin/courses') ? 'active' : ''}`}
+            >
+              <span className="nav-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+                  <path d="M6 6h10" />
+                  <path d="M6 10h10" />
+                </svg>
+              </span>
+              <span className="nav-item-label">Subjects & Classes</span>
+            </NavLink>
+
+            <NavLink
+              to="/admin/attendance"
+              className={`nav-link-item ${isActive('/admin/attendance') ? 'active' : ''}`}
+            >
+              <span className="nav-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                  <path d="m9 16 2 2 4-4" />
+                </svg>
+              </span>
+              <span className="nav-item-label">Attendance Stats</span>
+            </NavLink>
+
+            <NavLink
+              to="/admin/announcements"
+              className={`nav-link-item ${isActive('/admin/announcements') ? 'active' : ''}`}
+            >
+              <span className="nav-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+              </span>
+              <span className="nav-item-label">Announcements</span>
+            </NavLink>
+
+            <div className="nav-group-header">Institutional Tools</div>
+
+            <NavLink
+              to="/admin/attendance"
+              className="nav-link-item"
+            >
+              <span className="nav-item-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                </svg>
+              </span>
+              <span className="nav-item-label">Analytics & Reports</span>
+            </NavLink>
           </>
         ) : (
           /* Teacher / Faculty Navigation Links */

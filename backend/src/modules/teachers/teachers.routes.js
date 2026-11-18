@@ -20,4 +20,9 @@ router.get('/students', authMiddleware, rbacMiddleware('TEACHER', 'HOD', 'ADMIN'
 router.get('/', authMiddleware, controller.getAll);
 router.get('/:id', authMiddleware, controller.getById);
 
+// Admin Faculty Management
+router.post('/', authMiddleware, rbacMiddleware('ADMIN', 'HOD'), controller.create);
+router.put('/:id', authMiddleware, rbacMiddleware('ADMIN', 'HOD'), controller.update);
+router.delete('/:id', authMiddleware, rbacMiddleware('ADMIN', 'HOD'), controller.delete);
+
 module.exports = router;

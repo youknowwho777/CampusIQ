@@ -9,15 +9,15 @@ const Navbar = ({ onSearch }) => {
   const { user, logout } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const displayName = user?.name || (user?.role === 'STUDENT' ? 'Sophia Thompson' : 'Prof. Sarah Connor');
-  const displayRole = user?.role || (user?.role === 'STUDENT' ? 'STUDENT' : 'TEACHER');
+  const displayName = user?.name || (user?.role === 'ADMIN' ? 'System Administrator' : (user?.role === 'STUDENT' ? 'Sophia Thompson' : 'Prof. Sarah Connor'));
+  const displayRole = user?.role || 'STUDENT';
 
   const initials = displayName
     .split(' ')
     .filter(Boolean)
     .slice(0, 2)
     .map((w) => w[0].toUpperCase())
-    .join('') || (user?.role === 'STUDENT' ? 'ST' : 'SC');
+    .join('') || (user?.role === 'ADMIN' ? 'AD' : (user?.role === 'STUDENT' ? 'ST' : 'SC'));
 
   const handleLogout = () => {
     if (logout) logout();
@@ -36,7 +36,9 @@ const Navbar = ({ onSearch }) => {
     if (onSearch) {
       onSearch(searchTerm);
     } else if (searchTerm.trim()) {
-      if (user?.role === 'STUDENT') {
+      if (user?.role === 'ADMIN') {
+        navigate(`/admin/students?search=${encodeURIComponent(searchTerm.trim())}`);
+      } else if (user?.role === 'STUDENT') {
         navigate(`/courses?search=${encodeURIComponent(searchTerm.trim())}`);
       } else {
         navigate(`/teacher/students?search=${encodeURIComponent(searchTerm.trim())}`);
@@ -71,7 +73,11 @@ const Navbar = ({ onSearch }) => {
           type="button"
           className="btn-icon-nav action-circle-btn notification-btn"
           title="Notifications"
-          onClick={() => navigate(user?.role === 'STUDENT' ? '/dashboard' : '/teacher/notifications')}
+          onClick={() => {
+            if (user?.role === 'ADMIN') navigate('/admin/announcements');
+            else if (user?.role === 'STUDENT') navigate('/dashboard');
+            else navigate('/teacher/notifications');
+          }}
           aria-label="View notifications"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -85,7 +91,11 @@ const Navbar = ({ onSearch }) => {
         <div
           className="navbar-profile-pill action-circle-btn user-avatar-pill"
           title={`${displayName} (${displayRole})`}
-          onClick={() => navigate(user?.role === 'STUDENT' ? '/dashboard' : '/teacher/settings')}
+          onClick={() => {
+            if (user?.role === 'ADMIN') navigate('/admin');
+            else if (user?.role === 'STUDENT') navigate('/dashboard');
+            else navigate('/teacher/settings');
+          }}
           style={{ cursor: 'pointer' }}
         >
           <span className="navbar-user-initials">{initials}</span>
